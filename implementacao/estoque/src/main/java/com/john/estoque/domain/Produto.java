@@ -1,40 +1,31 @@
 package com.john.estoque.domain;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 
 @Entity
-public class Filial implements Serializable{
+public class Produto implements Serializable{
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id ;
+	private Integer id;
+	private Double preco;
+	private String codigoDeBarra;
 	
-	private String nome ;
-	
-	@JsonBackReference
-	@OneToMany(mappedBy = "filial")
-	private List<Pedido> pedidos = new ArrayList<>();
-
-	public Filial() {
+	public Produto() {
 		super();
 	}
 
-	public Filial(Integer id, String nome) {
+	public Produto(Integer id, Double preco, String codigoDeBarra) {
 		super();
 		this.id = id;
-		this.nome = nome;
+		this.preco = preco;
+		this.codigoDeBarra = codigoDeBarra;
 	}
 
 	public Integer getId() {
@@ -45,12 +36,20 @@ public class Filial implements Serializable{
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public Double getPreco() {
+		return preco;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setPreco(Double preco) {
+		this.preco = preco;
+	}
+
+	public String getCodigoDeBarra() {
+		return codigoDeBarra;
+	}
+
+	public void setCodigoDeBarra(String codigoDeBarra) {
+		this.codigoDeBarra = codigoDeBarra;
 	}
 
 	@Override
@@ -69,7 +68,7 @@ public class Filial implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Filial other = (Filial) obj;
+		Produto other = (Produto) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -80,5 +79,5 @@ public class Filial implements Serializable{
 	
 	
 	
-	
+
 }
