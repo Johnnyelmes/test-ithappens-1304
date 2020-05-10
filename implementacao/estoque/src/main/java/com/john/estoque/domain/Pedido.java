@@ -1,6 +1,9 @@
 package com.john.estoque.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -8,8 +11,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.john.estoque.domain.enums.FormaPagamento;
 import com.john.estoque.domain.enums.TipoPedido;
 
@@ -23,14 +28,17 @@ public class Pedido  implements Serializable{
 	private Integer id;
 	private Double valorFinal;
 	
-	//private Usuario usuario;
+	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
+	private Date data;
 	
-	@JsonManagedReference
+	@OneToOne
+	@JoinColumn(name="usuario_id")
+	private Usuario usuario;
+	
 	@ManyToOne
 	@JoinColumn(name="filial_id")
 	private Filial filial;
 	
-	@JsonManagedReference
 	@ManyToOne
 	@JoinColumn(name="cliente_id")
 	private Cliente cliente;
@@ -38,15 +46,19 @@ public class Pedido  implements Serializable{
 	private Integer tipo;
 	private Integer forma;
 	
+	@OneToMany(mappedBy = "pedido")
+	private List<ItemPedido> itemPedidos =  new ArrayList<>();
+	
 	public Pedido() {
 		super();
 	}
 	
-	public Pedido(Integer id, Double valorFinal, Filial filial, Cliente cliente, TipoPedido tipoPedido, FormaPagamento formaPagamento) {
+	public Pedido(Integer id, Double valorFinal, Date data,Usuario usuario, Filial filial, Cliente cliente, TipoPedido tipoPedido, FormaPagamento formaPagamento) {
 		super();
 		this.id = id;
 		this.valorFinal = valorFinal;
-		//this.usuario = usuario;
+		this.data = data;
+		this.usuario = usuario;
 		this.filial = filial;
 		this.cliente = cliente;
 		this.tipo = tipoPedido.getCod();
@@ -69,13 +81,20 @@ public class Pedido  implements Serializable{
 		this.valorFinal = valorFinal;
 	}
 
-	//public Usuario getUsuario() {
-	//	return usuario;
-	//}
+	public Date getData() {
+		return data;
+	}
+	
+	public void setData(Date data) {
+		this.data = data;
+	}
+	public Usuario getUsuario() {
+		return usuario;
+	}
 
-	//public void setUsuario(Usuario usuario) {
-	//	this.usuario = usuario;
-	//}
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
 
 	public Filial getFilial() {
 		return filial;
@@ -109,6 +128,14 @@ public class Pedido  implements Serializable{
 	public void setFormaPagamento(Integer formaPagamento) {
 		this.forma = formaPagamento;
 	}
+	
+	public List<ItemPedido> getItemPedidos() {
+		return itemPedidos;
+	}
+
+	public void setItemPedidos(List<ItemPedido> itemPedidos) {
+		this.itemPedidos = itemPedidos;
+	}
 
 	@Override
 	public int hashCode() {
@@ -134,6 +161,8 @@ public class Pedido  implements Serializable{
 			return false;
 		return true;
 	}
+
+
 	
 	
 

@@ -2,10 +2,14 @@ package com.john.estoque.domain;
 
 import java.io.Serializable;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToOne;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Usuario implements Serializable{
@@ -16,6 +20,10 @@ public class Usuario implements Serializable{
 	private Integer id;
 
 	private String nome;
+	
+	@JsonIgnore
+	@OneToOne(cascade = CascadeType.ALL, mappedBy = "usuario")
+	private Pedido pedido;
 
 	public Usuario() {
 		super();

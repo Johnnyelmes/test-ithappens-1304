@@ -8,37 +8,49 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
-public class Filial implements Serializable{
+public class FilialProduto implements Serializable {
+
 	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id ;
 	
-	private String nome ;
+	private Double preco ;
 	
-	@JsonIgnore
-	@OneToMany(mappedBy = "filial")
-	private List<Pedido> pedidos = new ArrayList<>();
-	
-	
-	@JsonIgnore
-	@OneToMany(mappedBy = "filial")
-	private List<FilialProduto> filialProdutos = new ArrayList<>();
 
-	public Filial() {
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="produto_id")
+	private Produto produto;
+	
+	@JsonIgnore
+	@ManyToOne
+	@JoinColumn(name="filial_id")
+	private Filial filial;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "filialProduto")
+	private List<ItemPedido> itemPedidos = new ArrayList<>();
+	
+	public FilialProduto() {
 		super();
 	}
 
-	public Filial(Integer id, String nome) {
+
+	public FilialProduto(Integer id, Double preco, Produto produto, Filial filial) {
 		super();
 		this.id = id;
-		this.nome = nome;
+		this.preco = preco;
+		this.produto = produto;
+		this.filial = filial;
 	}
 
 	public Integer getId() {
@@ -49,12 +61,36 @@ public class Filial implements Serializable{
 		this.id = id;
 	}
 
-	public String getNome() {
-		return nome;
+	public Double getPreco() {
+		return preco;
 	}
 
-	public void setNome(String nome) {
-		this.nome = nome;
+	public void setPreco(Double preco) {
+		this.preco = preco;
+	}
+
+	public Produto getProduto() {
+		return produto;
+	}
+
+	public void setProduto(Produto produto) {
+		this.produto = produto;
+	}
+
+	public Filial getFilial() {
+		return filial;
+	}
+
+	public void setFilial(Filial filial) {
+		this.filial = filial;
+	}
+	
+	public List<ItemPedido> getItemPedido() {
+		return itemPedidos;
+	}
+
+	public void setItemPedido(List<ItemPedido> itemPedidos) {
+		this.itemPedidos = itemPedidos;
 	}
 
 	@Override
@@ -73,7 +109,7 @@ public class Filial implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Filial other = (Filial) obj;
+		FilialProduto other = (FilialProduto) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -81,8 +117,8 @@ public class Filial implements Serializable{
 			return false;
 		return true;
 	}
+
 	
 	
-	
-	
+
 }

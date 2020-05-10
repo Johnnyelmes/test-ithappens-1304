@@ -1,11 +1,16 @@
 package com.john.estoque.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 public class Produto implements Serializable{
@@ -14,16 +19,22 @@ public class Produto implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
+	private String descricao;
 	private Double preco;
 	private String codigoDeBarra;
+	
+	@JsonIgnore
+	@OneToMany(mappedBy = "produto")
+	private List<FilialProduto> filialProdutos = new ArrayList<>();
 	
 	public Produto() {
 		super();
 	}
 
-	public Produto(Integer id, Double preco, String codigoDeBarra) {
+	public Produto(Integer id, String descricao ,Double preco, String codigoDeBarra) {
 		super();
 		this.id = id;
+		this.descricao = descricao;
 		this.preco = preco;
 		this.codigoDeBarra = codigoDeBarra;
 	}
@@ -35,6 +46,15 @@ public class Produto implements Serializable{
 	public void setId(Integer id) {
 		this.id = id;
 	}
+	
+	public String getDescricao() {
+		return descricao;
+	}
+	
+	public void setDescricao(String descricao) {
+		this.descricao = descricao;
+	}
+	
 
 	public Double getPreco() {
 		return preco;
@@ -76,7 +96,7 @@ public class Produto implements Serializable{
 			return false;
 		return true;
 	}
-	
+
 	
 	
 
