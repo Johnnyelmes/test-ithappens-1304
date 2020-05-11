@@ -1,0 +1,80 @@
+
+entity Usuario {
+	nome String,
+	id Integer,
+}
+
+entity Cliente {
+	id Integer,
+	nome String,
+}
+
+entity Filial {
+	id Integer,
+	nome String,
+}
+
+entity Produto {
+	id Integer,
+	nome String,
+    codigoBarra String,
+}
+
+entity FilialProduto {
+	id Integer,
+	preco Double,
+    produtoId Produto,
+    filialId Filial,
+}
+
+entity Pedido {
+	id Integer,
+	tipo TIPOPEDIDO,
+    data Date,
+    usuario Usuario,
+    cliente Cliente,
+    filial Filial,
+    forma FORMAPAGAMENTO,
+    observacaoEntrega String
+    
+}
+
+entity ItemPedido {
+	id Integer,
+	valorPedido Double,
+    quantidade Integer,
+    filialProduto FilialProduto,
+    pedido Pedido,
+    statusProduto STATUSPRODUTO,
+}
+
+
+
+
+enum TIPOPEDIDO {
+    ENTRADA, SAIDA
+}
+
+enum STATUSPRODUTO {
+    ATIVO, CANCELADO, PROCESSADO
+}
+
+enum FORMAPAGAMENTO {
+    DINHEIRO, CARTAO
+}
+
+
+// defining multiple OneToMany relationships with comments
+relationship OneToMany {
+	Filial to FilialProduto{filialId},
+	Produto to FilialProduto{produtoId},
+    Cliente to Pedido{cliente},
+    Usuario to Pedido{usuario},
+    Filial to Pedido{filial},
+    Pedido to ItemPedido{pedido},
+    FilialProduto to ItemPedido{filialProduto}
+    
+}
+
+// Set an angular suffix
+// angularSuffix * with mySuffix
