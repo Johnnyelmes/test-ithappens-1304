@@ -3,11 +3,11 @@ package com.john.estoque.dto;
 public class PedidoNewDTO {
 	
     //Pedido
-	private Double valorFinal;
 	private Integer usuarioId;
 	private Integer clienteId;
 	private Integer tipo;
 	private Integer forma;
+	private String observacaoEntrega;
 
 	//itemPedido
 	private Double valorPedido;
@@ -17,16 +17,6 @@ public class PedidoNewDTO {
 	
 	
 	public PedidoNewDTO() {
-	}
-
-
-	public Double getValorFinal() {
-		return valorFinal;
-	}
-
-
-	public void setValorFinal(Double valorFinal) {
-		this.valorFinal = valorFinal;
 	}
 
 	public Integer getUsuarioId() {
@@ -68,6 +58,13 @@ public class PedidoNewDTO {
 		this.forma = forma;
 	}
 
+	public String getObservacaoEntrega() {
+		return observacaoEntrega;
+	}
+
+	public void setObservacaoEntrega(String observacaoEntrega) {
+		this.observacaoEntrega = observacaoEntrega;
+	}
 
 	public Double getValorPedido() {
 		return valorPedido;

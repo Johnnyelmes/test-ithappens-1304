@@ -48,7 +48,11 @@ public class ItemPedido implements Serializable {
 		this.pedido = pedido;
 		this.status = status.getCod();
 	}
-
+	
+	public double getSubTotal() {
+		return (filialProduto.getProduto().getPreco() * quantidade);
+	}
+	
 	public Integer getId() {
 		return id;
 	}

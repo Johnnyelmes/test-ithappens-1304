@@ -15,6 +15,10 @@ import com.john.estoque.domain.Pedido;
 import com.john.estoque.dto.PedidoNewDTO;
 import com.john.estoque.services.PedidoService;
 
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+
+@Api(value="Controle de Estoque")
 @RestController
 @RequestMapping(value="pedidos")
 public class PedidoResource {
@@ -22,7 +26,7 @@ public class PedidoResource {
 	@Autowired
 	private PedidoService service;
 
-	
+	@ApiOperation(value="Retorna um unico Pedido")
 	@RequestMapping(value="/{id}",method = RequestMethod.GET)
 	public ResponseEntity<?> find(@PathVariable Integer id) {
 		Pedido obj = service.buscar(id);
@@ -30,6 +34,7 @@ public class PedidoResource {
 	}
 	
 
+	@ApiOperation(value="Insere um Pedido")
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert(@RequestBody PedidoNewDTO objDto){
 		Pedido obj = service.fromDTO(objDto);

@@ -26,7 +26,6 @@ public class Pedido  implements Serializable{
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer id;
-	private Double valorFinal;
 	
 	@JsonFormat(pattern = "dd/MM/yyyy HH:mm")
 	private Date data;
@@ -45,6 +44,7 @@ public class Pedido  implements Serializable{
 	
 	private Integer tipo;
 	private Integer forma;
+	private String observacaoEntrega;
 	
 	@OneToMany(mappedBy = "pedido")
 	private List<ItemPedido> itemPedidos =  new ArrayList<>();
@@ -53,16 +53,24 @@ public class Pedido  implements Serializable{
 		super();
 	}
 	
-	public Pedido(Integer id, Double valorFinal, Date data,Usuario usuario, Filial filial, Cliente cliente, TipoPedido tipoPedido, FormaPagamento formaPagamento) {
+	public Pedido(Integer id, Date data,Usuario usuario, Filial filial, Cliente cliente, TipoPedido tipoPedido, FormaPagamento formaPagamento, String observacaoEntrega) {
 		super();
 		this.id = id;
-		this.valorFinal = valorFinal;
 		this.data = data;
 		this.usuario = usuario;
 		this.filial = filial;
 		this.cliente = cliente;
 		this.tipo = tipoPedido.getCod();
 		this.forma = formaPagamento.getCod();
+		this.observacaoEntrega = observacaoEntrega;
+	}
+	
+	public double getTotal() {
+		double soma = 0.0;
+		for(ItemPedido x  : itemPedidos) {
+			soma +=  x.getFilialProduto().getProduto().getPreco() * x.getQuantidade();
+		}
+		return soma;
 	}
 
 	public Integer getId() {
@@ -71,14 +79,6 @@ public class Pedido  implements Serializable{
 
 	public void setId(Integer id) {
 		this.id = id;
-	}
-
-	public Double getValorFinal() {
-		return valorFinal;
-	}
-
-	public void setValorFinal(Double valorFinal) {
-		this.valorFinal = valorFinal;
 	}
 
 	public Date getData() {
@@ -123,6 +123,14 @@ public class Pedido  implements Serializable{
 
 	public FormaPagamento getForma() {
 		return FormaPagamento.toEnum(forma);
+	}
+
+	public String getObservacaoEntrega() {
+		return observacaoEntrega;
+	}
+
+	public void setObservacaoEntrega(String observacaoEntrega) {
+		this.observacaoEntrega = observacaoEntrega;
 	}
 
 	public void setFormaPagamento(Integer formaPagamento) {

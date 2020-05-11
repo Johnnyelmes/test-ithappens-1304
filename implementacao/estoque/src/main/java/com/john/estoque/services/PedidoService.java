@@ -49,7 +49,7 @@ public class PedidoService {
 		Usuario user = new Usuario(objDto.getUsuarioId(), null);
 		Cliente cli = new Cliente(objDto.getClienteId(), null);
 		FilialProduto filp = new FilialProduto(objDto.getFilialProdutoId(), null, null, null);
-		Pedido ped = new Pedido(null, objDto.getValorFinal(), new Date(), user, null, cli, TipoPedido.toEnum(objDto.getTipo()), FormaPagamento.toEnum(objDto.getForma()));
+		Pedido ped = new Pedido(null, new Date(), user, null, cli, TipoPedido.toEnum(objDto.getTipo()), FormaPagamento.toEnum(objDto.getForma()),objDto.getObservacaoEntrega());
 		ItemPedido itp = new ItemPedido(null, objDto.getValorPedido(), objDto.getQuantidade(), ped, filp, StatusProduto.toEnum(objDto.getStatus()));
 		ped.getItemPedidos().add(itp);
 		 

@@ -85,12 +85,12 @@ public class EstoqueApplication implements CommandLineRunner{
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy HH:mm");
 		
-		Pedido ped1 = new Pedido(null, 200.00, sdf.parse("20/10/2000 08:00"),usu1,fil1, null, TipoPedido.ENTRADA, FormaPagamento.DINHEIRO);
-		Pedido ped2 = new Pedido(null, 300.00, sdf.parse("30/11/2000 09:00"),usu1,fil1, null, TipoPedido.ENTRADA, FormaPagamento.CARTAO);
-		Pedido ped3 = new Pedido(null, 800.00, sdf.parse("23/05/2000 10:30"),usu2,fil2, null, TipoPedido.ENTRADA, FormaPagamento.DINHEIRO);
-		Pedido ped4 = new Pedido(null, 550.00, sdf.parse("07/07/2000 11:05") ,usu3,null, cli4, TipoPedido.SAIDA, FormaPagamento.DINHEIRO);
-		Pedido ped5 = new Pedido(null, 730.00, sdf.parse("20/12/2000 20:00"),usu4,null, cli5, TipoPedido.SAIDA, FormaPagamento.CARTAO);
-		Pedido ped6 = new Pedido(null, 730.00, sdf.parse("13/02/2000 12:30"),usu4,null, cli5, TipoPedido.SAIDA, FormaPagamento.CARTAO);
+		Pedido ped1 = new Pedido(null, sdf.parse("20/10/2000 08:00"),usu1,fil1, null, TipoPedido.ENTRADA, FormaPagamento.DINHEIRO, "Rua 2");
+		Pedido ped2 = new Pedido(null,sdf.parse("30/11/2000 09:00"),usu1,fil1, null, TipoPedido.ENTRADA, FormaPagamento.CARTAO, "Av 3");
+		Pedido ped3 = new Pedido(null, sdf.parse("23/05/2000 10:30"),usu2,fil2, null, TipoPedido.ENTRADA, FormaPagamento.DINHEIRO, "Av 4");
+		Pedido ped4 = new Pedido(null, sdf.parse("07/07/2000 11:05") ,usu3,null, cli4, TipoPedido.SAIDA, FormaPagamento.DINHEIRO, "Av 6");
+		Pedido ped5 = new Pedido(null, sdf.parse("20/12/2000 20:00"),usu4,null, cli5, TipoPedido.SAIDA, FormaPagamento.CARTAO, "Av 7");
+		Pedido ped6 = new Pedido(null, sdf.parse("13/02/2000 12:30"),usu4,null, cli5, TipoPedido.SAIDA, FormaPagamento.CARTAO, "Rua 3");
 		
 		pedidoRepository.saveAll(Arrays.asList(ped1, ped2, ped3, ped4,ped5, ped6));
 		
